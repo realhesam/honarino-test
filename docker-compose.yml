@@ -15,7 +15,7 @@ services:
             retries: 5
 
     api:
-        image: honarino/backend
+        image: ghcr.io/realhesam/honarino-test/backend:latest
         container_name: server
         env_file:
             - config/.api.env
@@ -30,7 +30,7 @@ services:
         restart: on-failure
 
     frontend:
-        image: honarino/frontend
+        image: ghcr.io/realhesam/honarino-test/frontend:latest
         container_name: frontend
         env_file:
             - config/.frontend.env
