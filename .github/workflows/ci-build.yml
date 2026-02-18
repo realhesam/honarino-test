@@ -58,6 +58,8 @@ jobs:
                       type=registry,ref=ghcr.io/${{ github.repository }}/frontend:buildcache,mode=max
 
     build-backend:
+        needs: changes
+        if: needs.changes.outputs.backend == 'true'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
