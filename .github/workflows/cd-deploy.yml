@@ -1,0 +1,32 @@
+name: CD - Deploy to Server
+
+on:
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: "Deploy To Server"
+                required: true
+                default: "latest"
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        environment: production
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+                      cd /path/to/deploy
+                      git pull origin main
+                      export IMAGE_TAG=${{ inputs.tag }}
+                      docker compose pull
+                      docker compose up -d --remove-orphans
+                      docker image prune -f

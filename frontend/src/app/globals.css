@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+@theme {
+  /* breakpoints */
+  --breakpoint-xs: 32rem;
+  /* font's */
+  --font-rubik: var(--font-rubik);
+
+  /* color's */
+  --color-primary: oklch(59.6% 0.145 163.225) /*#69d45a*/;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-rubik;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@layer utilities {
+  .container {
+    @apply px-2.5 mx-auto xl:max-w-[1480px] sm:px-5;
+  }
+}
+
+@layer components {
+  /* input component */
+  .input {
+    @apply w-full h-10 p-2 block border border-stone-300 bg-stone-200/70 rounded-xl outline-0 transition-colors focus:border-2 focus:border-primary;
+  }
+
+  .input-light {
+    @apply w-full px-4 py-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all bg-white disabled:focus:ring-0;
+  }
+
+  /* Swiper Component's */
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: white !important;
+    padding: 8px;
+    border-radius: 100%;
+    display: none !important;
+  }
+
+  @media screen and (min-width: 48rem) {
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: block !important;
+    }
+  }
+
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    @apply bg-white/50;
+  }
+  .swiper-pagination-bullet,
+  .banners-pagination {
+    position: relative;
+    background: white !important;
+    opacity: 0.6;
+  }
+
+  .banners-pagination {
+    background: #000 !important;
+  }
+
+  .swiper-pagination-bullet-active,
+  .swiper-pagination-bullet-active__banners {
+    background: red;
+    opacity: 1;
+  }
+
+  /* Website Component's */
+  .bg-skew {
+    @apply relative inline-block py-1 px-2 mx-1 after:content-[''] after:absolute after:inset-0 after:bg-primary text-white after:drop-shadow-2xl after:inline-block after:-skew-3  after:-z-10;
+  }
+
+  /* Button's */
+  .btn {
+    @apply text-sm flex items-center justify-center gap-1 rounded-xl transition-all sm:text-base;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90 disabled:bg-primary/60;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary/90 hover:text-white;
+  }
+
+  .btn-light {
+    @apply bg-white text-primary hover:bg-stone-100;
+  }
+
+  .btn-danger {
+    @apply text-white bg-red-600 hover:bg-red-700;
+  }
+
+  .btn-danger-light {
+    @apply text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white;
+  }
+
+  .btn-sm {
+    @apply py-1 px-2;
+  }
+
+  .btn-md {
+    @apply py-2 px-3 sm:px-5;
+  }
+
+  .btn-lg {
+    @apply py-3 px-4 sm:px-5;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    animation: var(--animate-spin);
+  }
+
+  .spinner-primary {
+    border: 4px solid var(--color-primary);
+    border-left-color: var(--color-stone-200);
+  }
+
+  .spinner-light {
+    border: 4px solid var(--color-white);
+    border-left-color: #fafafa46;
+  }
+
+  /* Other Component's */
+
+  .rounded-circle {
+    position: relative;
+  }
+
+  .rounded-circle::after,
+  .rounded-circle::before {
+    position: absolute;
+    content: "";
+    width: 1.5rem;
+    height: 1.5rem;
+    background: transparent;
+    border-radius: 100%;
+  }
+
+  .rounded-circle::before {
+    right: -1.4rem;
+    top: -1.85rem;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    box-shadow: -9px 9px white;
+  }
+
+  .rounded-circle::after {
+    left: -1.4rem;
+    top: -1.85rem;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    box-shadow: 9px 9px white;
+  }
+}
