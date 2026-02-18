@@ -1,4 +1,3 @@
-//test
 import LayoutCondition from "@/layout/LayoutCondition";
 import { NotificationProvider } from "@/layout/NotificationProvider";
 import type { Metadata } from "next";
