@@ -74,7 +74,7 @@ jobs:
                   profile: minimal
                   override: true
 
-            - uses: actions-rs/sccache@v1
+            - uses: mozilla-actions/sccache-action@v0.0.9
               with:
                   version: latest
 
