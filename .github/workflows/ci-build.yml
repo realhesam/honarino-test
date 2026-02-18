@@ -58,55 +58,28 @@ jobs:
                       type=registry,ref=ghcr.io/${{ github.repository }}/frontend:buildcache,mode=max
 
     build-backend:
-        needs: changes
-        if: needs.changes.outputs.backend == 'true'
-        runs-on: ubuntu-latest
-        env:
-            RUSTC_WRAPPER: sccache
-            CARGO_HOME: ${{ github.workspace }}/.cargo
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
 
-        steps:
-            - uses: actions/checkout@v4
+        - uses: docker/setup-buildx-action@v3
 
-            - uses: actions-rs/toolchain@v1
-              with:
-                  toolchain: stable
-                  profile: minimal
-                  override: true
+        - uses: docker/login-action@v3
+          with:
+              registry: ghcr.io
+              username: ${{ github.repository_owner }}
+              password: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: mozilla-actions/sccache-action@v0.0.9
-
-            - name: Install cargo-chef
-              run: cargo install cargo-chef
-
-            - name: Prepare recipe
-              run: cargo chef prepare --recipe-path recipe.json
-              working-directory: ./backend
-
-            - name: Cook recipe
-              run: cargo chef cook --release --recipe-path recipe.json
-              working-directory: ./backend
-
-            - uses: docker/setup-buildx-action@v3
-
-            - uses: docker/login-action@v3
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.repository_owner }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Build & Push Backend Docker
-              uses: docker/build-push-action@v5
-              with:
-                  context: ./backend
-                  file: ./backend/Dockerfile
-                  push: true
-                  tags: |
-                      ghcr.io/${{ github.repository }}/backend:latest
-                      ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
-                  cache-from: |
-                      type=gha
-                      type=registry,ref=ghcr.io/${{ github.repository }}/backend:buildcache
-                  cache-to: |
-                      type=gha,mode=max
-                      type=registry,ref=ghcr.io/${{ github.repository }}/backend:buildcache,mode=max
+        - name: Build & Push Backend Docker
+          uses: docker/build-push-action@v5
+          with:
+              context: ./backend
+              file: ./backend/Dockerfile
+              push: true
+              tags: |
+                  ghcr.io/${{ github.repository }}/backend:latest
+                  ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+              cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/backend:buildcache
+              cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/backend:buildcache,mode=max
