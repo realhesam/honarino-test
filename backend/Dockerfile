@@ -1,20 +1,34 @@
-# Stage 0: Cache dependencies
-FROM rust:alpine as chef
+FROM rust:alpine AS builder
+
+RUN apk add --no-cache \
+    musl-dev \
+    postgresql-client \
+    openssl-dev \
+    openssl-libs-static \
+    pkgconfig
+
 WORKDIR /app
 
-RUN apk add --no-cache musl-dev postgresql-client openssl-dev openssl-libs-static
-
 COPY Cargo.toml Cargo.lock ./
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-RUN cargo build --release || true
-RUN rm -rf src
+
+RUN mkdir -p src/bin && \
+    echo 'fn main() { println!("dummy"); }' > src/main.rs && \
+    echo 'fn lib() {}' > src/lib.rs 2>/dev/null || true
+
+RUN cargo build --release --locked && \
+    rm -rf target/release/deps/*server*
 
 COPY src ./src
 COPY migrations ./migrations
-RUN cargo build --release
+
+RUN cargo build --release --locked
 
 FROM alpine:latest
+
 RUN apk add --no-cache libpq
-COPY --from=chef /app/target/release/server /usr/local/bin/server
+
+COPY --from=builder /app/target/release/server /usr/local/bin/server
+
 EXPOSE 8000
+
 CMD ["server"]
