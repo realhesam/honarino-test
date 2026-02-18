@@ -1,4 +1,4 @@
-#test ci122332
+#test
 use api_clean_architecture::config::Config;
 use api_clean_architecture::infrastructure::{Database};
 use api_clean_architecture::presentation::routes;
