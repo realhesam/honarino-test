@@ -22,3 +22,10 @@ spec:
                             name: api
                             port:
                                 number: 8000
+                  - path: /storage/
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: minio
+                            port:
+                                number: 9000
