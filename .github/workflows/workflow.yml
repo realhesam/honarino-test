@@ -116,7 +116,12 @@ jobs:
 
     update-manifests:
         needs: [changes, build-frontend, build-backend]
-        if: needs.changes.outputs.frontend == 'true' || needs.changes.outputs.backend == 'true'
+        if: |
+        always() &&
+        (
+            needs.build-frontend.result == 'success' ||
+            needs.build-backend.result == 'success'
+        )
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
