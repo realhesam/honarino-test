@@ -136,21 +136,21 @@ jobs:
               run: |
                   sed -i \
                     "s|image: ghcr.io/${{ github.repository }}/frontend:.*|image: ghcr.io/${{ github.repository }}/frontend:${{ steps.vars.outputs.short_sha }}|g" \
-                    k8s/frontend/frontend-deployment.yaml
+                    k8s/honarino/frontend/frontend-deployment.yaml
 
             - name: Update backend image tag
               if: needs.changes.outputs.backend == 'true' && needs.build-backend.result == 'success'
               run: |
                   sed -i \
                     "s|image: ghcr.io/${{ github.repository }}/backend:.*|image: ghcr.io/${{ github.repository }}/backend:${{ steps.vars.outputs.short_sha }}|g" \
-                    k8s/api/api-deployment.yaml
+                    k8s/honarino/api/api-deployment.yaml
 
             - name: Commit & Push manifest changes
               run: |
                   git config user.name "realhesam"
                   git config user.email "e.hesamkasaeian@gmail.com"
 
-                  git add k8s/
+                  git add k8s/honarino/
 
                   git diff --staged --quiet || git commit -m "chore: update image tags to ${{ steps.vars.outputs.short_sha }} [ci skip]"
 
