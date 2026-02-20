@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: minio-init
+    namespace: honarino
+spec:
+    template:
+        spec:
+            restartPolicy: OnFailure
+            containers:
+                - name: minio-init
+                  image: minio/mc:latest
+                  command:
+                      - /bin/sh
+                      - -c
+                      - |
+                          sleep 10;
+                          mc alias set local http://minio:9000 minioadmin VeryStrongPassword123;
+                          mc mb local/uploads;
+                          mc anonymous set public local/uploads;

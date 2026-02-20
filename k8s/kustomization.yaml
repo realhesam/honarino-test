@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: honarino
+
+resources:
+    - namespace.yaml
+
+    # secrets
+    - secrets/postgres-secret.yaml
+    - secrets/minio-secret.yaml
+    - secrets/api-secret.yaml
+
+    # postgres
+    - postgres/postgres-pvc.yaml
+    - postgres/postgres-service.yaml
+    - postgres/postgres-statefulset.yaml
+
+    # api
+    - api/api-service.yaml
+    - api/api-deployment.yaml
+
+    # frontend
+    - frontend/frontend-service.yaml
+    - frontend/frontend-deployment.yaml
+
+    # minio
+    - minio/minio-pvc.yaml
+    - minio/minio-service.yaml
+    - minio/minio-deployment.yaml
+    - minio/minio-init-job.yaml
+
+    # ingress
+    - ingress/ingress.yaml

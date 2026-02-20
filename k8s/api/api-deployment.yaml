@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: api
+    namespace: honarino
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: api
+    template:
+        metadata:
+            labels:
+                app: api
+        spec:
+            containers:
+                - name: api
+                  image: ghcr.io/realhesam/honarino-test/backend:latest
+                  ports:
+                      - containerPort: 8000
+                  envFrom:
+                      - secretRef:
+                            name: api-secret
