@@ -2,6 +2,7 @@ FROM node:lts-alpine AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+RUN npm install
 RUN npm ci
 
 FROM node:lts-alpine AS builder
