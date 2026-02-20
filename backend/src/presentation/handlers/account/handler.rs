@@ -55,7 +55,7 @@ impl AccountHandler {
     async fn create_upload_url(
         Extension(user): Extension<AuthenticatedUser>,
     ) -> Result<Json<UploadUrlResponse>, ApiError> {
-        let env_config = Config::from_env().expect("Failed to load configuration");
+        let env_config = Config::from_env().expect("Failed to load configuration.");
 
         let access_key = &env_config.minio_access_key;
         let secret_key = &env_config.minio_secret_key;
