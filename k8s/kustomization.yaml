@@ -32,3 +32,4 @@ resources:
 
     # ingress
     - ingress/ingress.yaml
+    - ingress/argocd-ingress.yaml
