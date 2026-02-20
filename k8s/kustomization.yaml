@@ -12,7 +12,6 @@ resources:
     - secrets/api-secret.yaml
 
     # postgres
-    - postgres/postgres-pvc.yaml
     - postgres/postgres-service.yaml
     - postgres/postgres-statefulset.yaml
 
