@@ -95,8 +95,6 @@ impl AccountHandler {
             .await
             .map_err(|e| ApiError::InternalServerError(e.to_string()))?;
 
-        println!("{:#?}", presigned_request.uri().to_string());
-
         let public_url = presigned_request
             .uri()
             .to_string()
