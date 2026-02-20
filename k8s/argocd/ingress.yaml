@@ -2,12 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
     name: argocd-server-http
+    namespace: argocd
 spec:
     rules:
-        - host:
-          http:
+        - http:
               paths:
-                  - path: /argocd
+                  - path: /argocd(/|$)(.*)
                     pathType: Prefix
                     backend:
                         service:
