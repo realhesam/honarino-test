@@ -63,7 +63,7 @@ function SliderCover() {
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 z-10">
         <div className="text-shadow-lg flex flex-col items-center">
           <h1 className="text-xl sm:text-2xl md:text-4xl font-bold shadow-stone-700">
-            <span className="bg-skew">هنرینو</span>
+            <span className="bg-skew">2 هنرینو</span>
             <span>, سامانه فروش مبلمان و صنایع دستی.</span>
           </h1>
           <p className="mt-2 sm:mt-4 text-sm sm:text-base md:text-lg max-w-xl">
