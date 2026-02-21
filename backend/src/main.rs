@@ -23,7 +23,7 @@ async fn main() {
         .await
         .expect("Failed to initialize database");
 
-    tracing::info!("Database connected successfully.");
+    tracing::info!("The Database connected successfully.");
 
     db.run_migrations()
         .await
@@ -47,5 +47,6 @@ async fn main() {
         .await
         .expect("Server error");
 }
+
 
 
