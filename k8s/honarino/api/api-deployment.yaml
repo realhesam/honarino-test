@@ -15,7 +15,7 @@ spec:
         spec:
             containers:
                 - name: api
-                  image: ghcr.io/realhesam/honarino-test/backend:latest
+                  image: ghcr.io/realhesam/honarino-test/backend:5f14535
                   ports:
                       - containerPort: 8000
                   envFrom:
